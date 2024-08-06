@@ -46,11 +46,12 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
-const app = express();
 const cors = require("cors");
 const { notFound, errorHandler } = require("../middleware/errorMiddleware");
 
 dotenv.config();
+
+const app = express();
 
 app.use(
   cors({
@@ -66,13 +67,14 @@ const messageRoutes = require("../Routes/messageRoutes");
 
 const connectDb = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI, {
+    await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
     console.log("Server is Connected to Database");
   } catch (err) {
     console.log("Server is NOT connected to Database", err.message);
+    process.exit(1); // Exit the process if the database connection fails
   }
 };
 connectDb();
@@ -90,6 +92,6 @@ app.use(notFound);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log("Server is Running..."));
+app.listen(PORT, () => console.log(`Server is Running on port ${PORT}`));
 
 module.exports = app;
