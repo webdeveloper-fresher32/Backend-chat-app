@@ -13,6 +13,9 @@ app.use(
 dotenv.config();
 
 app.use(express.json());
+app.use("/",(req,res)=>{
+  res.send("Hello world");
+}
 
 const userRoutes = require("./Routes/userRoutes");
 const chatRoutes = require("./Routes/chatRoutes");
@@ -20,7 +23,7 @@ const messageRoutes = require("./Routes/messageRoutes");
 
 const connectDb = async () => {
   try {
-    const connect = await mongoose.connect("mongodb+srv://bsanjay0701:YKY4Ca9QMRzAlLuB@cluster0.ohqeuj1.mongodb.net/chat-app");
+    const connect = await mongoose.connect(process.env.MONGODB_URI);
     console.log("Server is Connected to Database");
   } catch (err) {
     console.log("Server is NOT connected to Database", err.message);
