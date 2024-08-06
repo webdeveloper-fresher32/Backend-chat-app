@@ -13,9 +13,7 @@ app.use(
 dotenv.config();
 
 app.use(express.json());
-app.use("/",(req,res)=>{
-  res.send("Hello world");
-}
+
 
 const userRoutes = require("./Routes/userRoutes");
 const chatRoutes = require("./Routes/chatRoutes");
